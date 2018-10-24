@@ -8,7 +8,7 @@ import random
 pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.init()
 
-# create a game displayadd
+# create a game display
 pygame.display.set_icon(sprites.icon)
 display_width = 800
 display_height = 600
@@ -17,6 +17,10 @@ game_display = pygame.display.set_mode((display_width, display_height))
 # 8 bit font
 font = "8-Bit-Madness.ttf"
 
+def music():
+    pygame.mixer.music.load("sounds/bg_music.wav")
+    pygame.mixer.music.set_volume(0.7)
+    pygame.mixer.music.play(-1)
 
 # text rendering function
 def message_to_screen(message, textfont, size, color):
@@ -118,9 +122,10 @@ def main_menu():
         game_display.blit(sprites.background, (0, 0))
 
         if godmode:
-            title = message_to_screen("SPACE SHIP (GODMODE)", font, 80, yellow)
+            title = message_to_screen("SPACE SHIP  (GODMODE)",font, 80, yellow)
         else:
             title = message_to_screen("SPACE SHIP", font, 100, white)
+            title_authors = message_to_screen("KOSTUL' GAMES PRESENTS", font, 60, white)
         controls_1 = message_to_screen("use WASD to move, SPACE to shoot,", font, 30, white)
         controls_2 = message_to_screen("P to toggle pause", font, 30, white)
         if selected == "play":
@@ -133,6 +138,7 @@ def main_menu():
             game_quit = message_to_screen("QUIT", font, 75, white)
 
         title_rect = title.get_rect()
+        title_rect_prod = title_authors.get_rect()
         controls_1_rect = controls_1.get_rect()
         controls_2_rect = controls_2.get_rect()
         play_rect = play.get_rect()
@@ -140,6 +146,7 @@ def main_menu():
 
         # drawing text
         game_display.blit(title, (display_width/2 - (title_rect[2]/2), 40))
+        game_display.blit(title_authors, (display_width / 2 - (title_rect_prod[2] / 2), 10))
         game_display.blit(controls_1, (display_width/2 - (controls_1_rect[2]/2), 120))
         game_display.blit(controls_2, (display_width/2 - (controls_2_rect[2]/2), 140))
         game_display.blit(play, (display_width/2 - (play_rect[2]/2), 200))
@@ -189,6 +196,8 @@ def pause():
 
 # create a game loop
 def game_loop():
+
+    music()
 
     global missile_x
     global missile_y
@@ -270,13 +279,13 @@ def game_loop():
                             quit()
 
             game_over_text = message_to_screen("GAME OVER", font, 100, white)
-            your_score = message_to_screen("YOUR SCORE WAS: " + str(score), font, 50, black)
+            your_score = message_to_screen("YOUR SCORE WAS: " + str(score), font, 50, white)
             if game_over_selected == "play again":
-                play_again = message_to_screen("PLAY AGAIN", font, 75, white)
+                play_again = message_to_screen("PLAY AGAIN", font, 75, red)
             else:
                 play_again = message_to_screen("PLAY AGAIN", font, 75, white)
             if game_over_selected == "quit":
-                game_quit = message_to_screen("QUIT", font, 75, white)
+                game_quit = message_to_screen("QUIT", font, 75, red)
             else:
                 game_quit = message_to_screen("QUIT", font, 75, white)
 
@@ -342,9 +351,7 @@ def game_loop():
         if player.wrecked:
             game_over = True
 
-
         game_display.blit(sprites.background, (0, 0))
-
 
         # drawing player
         game_display.blit(player.current, (player.x, player.y))
@@ -460,7 +467,7 @@ def game_loop():
         if asteroid_x < player.x < asteroid_x+70 or asteroid_x < player.x+100 < asteroid_x+70:
             if asteroid_y < player.y < asteroid_y+80 or asteroid_y < player.y+80 < asteroid_y+80:
                 pygame.mixer.Sound.play(explosion)
-                # player.damaged = True
+                player.damaged = True
                 player.health -= 1
                 asteroid_x = 800-1500
 
@@ -469,7 +476,7 @@ def game_loop():
             if player.x < hit_player[0] < player.x+100 or player.x < hit_player[0]+40 < player.x+100:
                 if player.y < hit_player[1]+40 < player.y+80 or player.y < hit_player[1]+50 < player.y+80:
                     pygame.mixer.Sound.play(explosion)
-                   # player.damaged = True
+                    player.damaged = True
                     player.health -= 1
                     enemy_space_ship.bullets.remove(hit_player)
 
@@ -478,9 +485,10 @@ def game_loop():
             if missile_y < player.y < missile_y+88 or missile_y < player.y+80 < missile_y+88:
                 if not missile_hit_player:
                     pygame.mixer.Sound.play(explosion)
-                   # player.damaged = True
+                    player.damaged = True
                     player.health -= 1
                     missile_hit_player = True
+                    missile_x = 800 - 1500
 
         game_display.blit(sprites.asteroid, (asteroid_x, asteroid_y))
         if asteroid_x <= 800 - 870:
@@ -535,4 +543,3 @@ main_menu()
 game_loop()
 pygame.quit()
 quit()
-
