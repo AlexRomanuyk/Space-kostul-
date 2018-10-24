@@ -395,10 +395,10 @@ def game_loop():
 
         # spawn missile randomly
         missile_spawn_num = random.randint(0, 100)
-        if missile_spawn_num == 50 and not missile_alive and score > 450:
+        if missile_spawn_num == 1 and not missile_alive and score > 50:
             warning = True
 
-        # show warning before  missile spawning
+        # show warning before missile spawning
         if warning:
             if warning_once:
                 pygame.mixer.Sound.play(alert)

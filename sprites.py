@@ -14,7 +14,7 @@ enemy_space_ship_list = [enemy_space_ship_1, enemy_space_ship_2]
 
 asteroid = pygame.image.load('sprites/asteroid.png')
 
-missile = pygame.image.load('sprites/missile.png')
+missile = pygame.image.load('sprites/kostul.png')
 
 icon = pygame.image.load('sprites/icon.png')
 background = pygame.image.load('sprites/background.png')
