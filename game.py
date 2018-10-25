@@ -19,7 +19,7 @@ font = "8-Bit-Madness.ttf"
 
 def music():
     pygame.mixer.music.load("sounds/bg_music.wav")
-    pygame.mixer.music.set_volume(0.7)
+    pygame.mixer.music.set_volume(0.1)
     pygame.mixer.music.play(-1)
 
 # text rendering function
@@ -273,7 +273,10 @@ def game_loop():
                             player.health = 3
                             bullets = []
 
+
+                            player.renew_colision()
                             game_loop()
+
                         if game_over_selected == "quit":
                             pygame.quit()
                             quit()
@@ -389,16 +392,16 @@ def game_loop():
 
         # draw randomly positioned asteroids, pop if they hit any bullet
         for pop_asteroid in bullets:
-            if asteroid_x < pop_asteroid[0]+90 < asteroid_x+70 and asteroid_y < pop_asteroid[1]+40 < asteroid_y+100:
+            if asteroid_x < pop_asteroid[0]+0 < asteroid_x+70 and asteroid_y < pop_asteroid[1]+40 < asteroid_y+140:
                 pygame.mixer.Sound.play(pop)
                 bullets.remove(pop_asteroid)
                 asteroid_x = 800 - 1500
                 score += 50
-            elif asteroid_x < pop_asteroid[0]+100 < asteroid_x+70 and asteroid_y < pop_asteroid[1]+50 < asteroid_y+100:
-                pygame.mixer.Sound.play(pop)
-                bullets.remove(pop_asteroid)
-                asteroid_x = 800 - 1500
-                score += 50
+         #   elif asteroid_x < pop_asteroid[0]+100 < asteroid_x+70 and asteroid_y < pop_asteroid[1]+50 < asteroid_y+130:
+          #      pygame.mixer.Sound.play(pop)
+          #      bullets.remove(pop_asteroid)
+           #     asteroid_x = 800 - 1500
+            #    score += 50
 
         # spawn missile randomly
         missile_spawn_num = random.randint(0, 100)

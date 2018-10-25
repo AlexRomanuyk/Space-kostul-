@@ -4,11 +4,11 @@ import sprites
 class SpaceShip(object):
 
     health = 3
-
+    start_colision = sprites.space_ship_1
     animation_number = 0
     animation_list = sprites.space_ship_list
     counter = 0
-    current = sprites.space_ship_list[animation_number]
+    current = sprites.space_ship_list[0]
 
     crash_counter = 0
 
@@ -48,13 +48,17 @@ class SpaceShip(object):
             self.wreck_start = False
             self.wrecked = True
 
+    def renew_colision(self):
+        self.current = sprites.space_ship_1
+
+
     def blink_red(self):
-        self.animation_list = sprites.space_ship_damage_list
-        #self.damaged_counter += 1
-        #if self.damaged_counter >= 15:
-        self.animation_list = sprites.space_ship_list
-        self.damaged = False
-        #self.damaged_counter = 0
+        self.animation_list = sprites.space_ship_damage_list[0]
+        self.damaged_counter += 1
+        if self.damaged_counter >= 15:
+            self.animation_list = sprites.space_ship_list
+            self.damaged = False
+            self.damaged_counter = 0
 
     def movement(self):
 
@@ -92,25 +96,25 @@ class SpaceShip(object):
         if self.y > 430:
             self.health = 0
 
-   # def animation(self):
+    #def animation(self):
 
-        #self.counter += 1
+     #   self.counter += 1
 
-        #if self.counter == 2:
+      #  if self.counter == 2:
 
-         #   if self.next_0:
-          #      self.current = self.animation_list[0]
-           #     self.next_0 = False
-            #    self.next_1 = True
-            #elif self.next_1:
-             #   self.current = self.animation_list[1]
-              #  self.next_1 = False
-               # self.next_0 = True
+       #     if self.next_0:
+        #        self.current = self.animation_list[0]
+         #       self.next_0 = False
+          #      self.next_1 = True
+           # elif self.next_1:
+            #    self.current = self.animation_list[0]
+             #   self.next_1 = False
+              #  self.next_0 = True
 
             #self.counter = 0
 
     def player_init(self):
-        # self.animation()
+        #self.animation()
         self.movement()
         if self.damaged:
             self.blink_red()
