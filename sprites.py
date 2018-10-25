@@ -5,6 +5,7 @@ space_ship_2 = pygame.image.load('sprites/space_ship.png')
 space_ship_crash = pygame.image.load('sprites/explosion.png')
 space_ship_damage = pygame.image.load('sprites/space_ship_damage.png')
 
+
 enemy_space_ship_1 = pygame.image.load('sprites/enemy_space_ship.png')
 enemy_space_ship_2 = pygame.image.load('sprites/enemy_space_ship.png')
 
@@ -14,7 +15,9 @@ enemy_space_ship_list = [enemy_space_ship_1, enemy_space_ship_2]
 
 asteroid = pygame.image.load('sprites/asteroid.png')
 
-missile = pygame.image.load('sprites/missile.png')
+turel = pygame.image.load('sprites/turel.png')
+
+missile = pygame.image.load('sprites/kostul.png')
 
 icon = pygame.image.load('sprites/icon.png')
 background = pygame.image.load('sprites/background.png')

@@ -3,6 +3,7 @@ import space_ship
 import enemy_space_ship
 import sprites
 import random
+import turel
 
 # initialize pygame
 pygame.mixer.pre_init(44100, -16, 1, 512)
@@ -365,9 +366,13 @@ def game_loop():
         # drawing missile
         game_display.blit(sprites.missile, (missile_x, missile_y))
 
+        # drawing turel
+       # game_display.blit(sprites.turel, (turel.x, turel.y))
+
         # enabling movement and animations
         player.player_init()
         enemy_space_ship.init()
+       # turel.init()
 
         # rendering bullets
         if not player.wreck_start and not player.wrecked:
@@ -392,11 +397,13 @@ def game_loop():
 
         # draw randomly positioned asteroids, pop if they hit any bullet
         for pop_asteroid in bullets:
-            if asteroid_x < pop_asteroid[0]+0 < asteroid_x+70 and asteroid_y < pop_asteroid[1]+40 < asteroid_y+140:
+            if asteroid_x < pop_asteroid[0] + 0 < asteroid_x + 70 and asteroid_y < pop_asteroid[ 1] + 40 < asteroid_y + 140:
                 pygame.mixer.Sound.play(pop)
                 bullets.remove(pop_asteroid)
                 asteroid_x = 800 - 1500
                 score += 50
+
+
          #   elif asteroid_x < pop_asteroid[0]+100 < asteroid_x+70 and asteroid_y < pop_asteroid[1]+50 < asteroid_y+130:
           #      pygame.mixer.Sound.play(pop)
           #      bullets.remove(pop_asteroid)
@@ -434,22 +441,26 @@ def game_loop():
 
         # spawn enemy space ship randomly
         enemy_spawn_num = random.randint(0, 100)
-        if not enemy_space_ship_alive and score > 250 and enemy_spawn_num == 50:
+        if not enemy_space_ship_alive and score > 50 and enemy_spawn_num == 50:
             enemy_space_ship_alive = True
             enemy_space_ship.x = 800
+            enemy_space_ship.health = 3
 
         # enemy-player bullet collision detection
         for hit_enemy_space_ship in bullets:
-            if enemy_space_ship.x < hit_enemy_space_ship[0]+90 < enemy_space_ship.x+100 \
+            if enemy_space_ship.x < hit_enemy_space_ship[0]+0 < enemy_space_ship.x+100 \
                or enemy_space_ship.x < hit_enemy_space_ship[0]+100 < enemy_space_ship.x+100:
                 if enemy_space_ship.y < hit_enemy_space_ship[1]+40 < enemy_space_ship.y+80 \
                    or enemy_space_ship.y < hit_enemy_space_ship[1]+50 < enemy_space_ship.y+80:
                     if not enemy_space_ship.x > 600:
-                        pygame.mixer.Sound.play(explosion2)
-                        score += 150
                         bullets.remove(hit_enemy_space_ship)
-                        enemy_space_ship.x = -100
-                        enemy_space_ship_alive = False
+                        enemy_space_ship.health -= 1
+                        if enemy_space_ship.health == 0:
+                            pygame.mixer.Sound.play(explosion2)
+                            score += 150
+                            enemy_space_ship.x = -100
+                            enemy_space_ship_alive = False
+
 
         # missile-player bullet
         for hit_missile in bullets:

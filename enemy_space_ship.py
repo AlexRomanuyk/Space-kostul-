@@ -5,6 +5,8 @@ import pygame
 
 class EnemySpaceShip(object):
 
+    health = 3
+
     shoot = False
     shoot_counter = 0
     bullets = []
@@ -22,6 +24,9 @@ class EnemySpaceShip(object):
 
     x = 0
     y = 0
+
+
+
 
     y_stop = random.randint(200, 600)
 
